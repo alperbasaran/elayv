@@ -1,9 +1,15 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import socket
 import httplib
 import urllib
-print " "
-print " "
+import argparse
+
+parser=argparse.ArgumentParser(description='Hedefe ait IP aralığında 80. porttan cevap veren IP adreslerini arar.')
+parser.add_argument('-ip',type=str,help='IP adresi temeli', required=True)
+parser.add_argument('-b',type=int,help='IP araligi basi', default=1)
+parser.add_argument('-s',type=int,help='IP araligi sonu',default=255)
+
 print " "
 print " *****************************"
 print " *****************************"
@@ -13,23 +19,22 @@ print " *****************************"
 print " "
 print "Hedefe ait IP aralığında 80. porttan cevap veren IP adreslerini arar"
 print " "
-print "Örnek: 192.168.1.16 ile 192.168.1.34 arasındaki IP adresleri taramak için:"
-print "IP adresi temelini girin: 192.168.1.1"
-print "IP adresi aralığı başı: 16"
-print "IP adresi aralığı sonu: 34"
+print "Örnek:192.168.1.16 ile 192.168.1.34 arasındaki IP adresleri taramak için:"
+print "elayv.py -ip 192.168.1.1 -b 16 -s 34"
 print " "
 print "Eleştiri ve hakaret dolu tweetleriniz için: @basaranalper"
 print " "
 
-net= raw_input("IP adresi temelini girin: ")
+cmdargs=parser.parse_args()
+net=cmdargs.ip
+st1=cmdargs.b
+en1=cmdargs.s
+
 net1= net.split('.')
 a = '.'
 net2 = net1[0]+a+net1[1]+a+net1[2]+a
-st1 = int(raw_input("IP adresi aralığı başı: "))
-en1 = int(raw_input("IP adresi aralığı sonu: "))
 en1=en1+1
 socket.setdefaulttimeout(3)
-
 
 def scan(addr):
 	try:
